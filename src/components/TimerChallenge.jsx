@@ -11,7 +11,7 @@ export default function TimerChallenge({ title, targetTime }) {
     timer.current = setTimeout(() => {
       // useRef ritorna sempre un oggetto con una proprietà di nome current
       setTimerExpired(true);
-      dialog.current.showModal(); //la ref punta al componente ResultModal e il tag <dialog> possiede il metodo showModal()
+      dialog.current.open(); //punta al metodo open che ho definito io dentro al componente con useImperativeHandle()
     }, targetTime * 1000);
     setTimerStarted(true);
   }
