@@ -1,4 +1,5 @@
 import { forwardRef, useRef, useImperativeHandle } from "react"
+import { createPortal } from "react-dom";
 /* per usare forwardRef va passato come argomento la funzione con le props e dopo la virgola il secondo argomento sarà ref
  usiamo questi passaggi per non usare la prop open sul <dialog> perchè non metterebbe in primo piano il modale come vorremmo
  a livello di stile css, eseguiamo invece il metodo showModal() nel componente padre grazie a useRef() */
@@ -17,7 +18,7 @@ import { forwardRef, useRef, useImperativeHandle } from "react"
         }
     })
 
-    return(
+    return createPortal( //"teletrasporta" il contenuto nel secondo argomento che passo con il queryselector
         <dialog className="result-modal" ref={dialog} onClose={onReset}> {/* l'onClose va messo per chi preme ESC altrimenti non resetto  */}
             {userLost && <h2>You Lost!</h2>}
             {!userLost && <h2>Your Score: {score} / 100</h2>}
@@ -26,7 +27,8 @@ import { forwardRef, useRef, useImperativeHandle } from "react"
             <form method="dialog" onSubmit={onReset}> {/*All'interno di un dialog un bottone che submitta un form con questo metodo lo chiude*/}
                 <button>Close</button>
             </form>
-        </dialog>
+        </dialog>,
+        document.querySelector('#modal')
     )
 })
 
